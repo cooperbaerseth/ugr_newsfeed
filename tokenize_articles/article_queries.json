@@ -1,0 +1,33 @@
+{
+    "queries": [{
+        "get_url": "https://newsapi.org/v2/everything?",
+        "q": "Inflection AI",
+        "from": "2023-06-23",
+        "sortBy": "popularity"
+    },
+    {
+        "get_url": "https://newsapi.org/v2/everything?",
+        "q": "tampa bay lightning",
+        "from": "2023-06-23",
+        "sortBy": "popularity"
+    },
+    {
+        "get_url": "https://newsapi.org/v2/everything?",
+        "q": "Donald Trump",
+        "from": "2023-06-23",
+        "sortBy": "popularity"
+    },
+    {
+        "get_url": "https://newsapi.org/v2/everything?",
+        "q": "UFO Sightings",
+        "from": "2023-06-23",
+        "sortBy": "popularity"
+    },
+    {
+        "get_url": "https://newsapi.org/v2/everything?",
+        "q": "Guilty Gear Strive",
+        "from": "2023-06-23",
+        "sortBy": "popularity"
+    }
+]
+}
