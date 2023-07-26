@@ -28,10 +28,18 @@ with open(article_data_path, 'r') as f:
 
 # tiktoken / OpenAI tokenization
 tiktoken_tokenizer = tiktoken.encoding_for_model("gpt-4")
-tokens = tiktoken_tokenizer.encode("string to encode")
-print(len(tokens))
 
 # LLaMa-2 tokenization
 llama_tokenizer = AutoTokenizer.from_pretrained(conf["hugging_face_model_name"], use_auth_token=hugging_face_api_key)
-tokens = llama_tokenizer.encode("string to encode")
-print(len(tokens))
+
+# count tokens in articles
+for query in article_data['article_data']:
+    for article in query['articles']:
+        article['tiktoken_token_count'] = len(tiktoken_tokenizer.encode(article['text']))
+        article['llama_token_count'] = len(llama_tokenizer.encode(article['text']))
+        print(f"url: {article['url']}")
+        print(f"tiktoken_token_count: {article['tiktoken_token_count']}")
+        print(f"llama_token_count: {article['llama_token_count']}\n")
+
+with open(f'article_data.json', 'w') as f:
+    json.dump(article_data, f)

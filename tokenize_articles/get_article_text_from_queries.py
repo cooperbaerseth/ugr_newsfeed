@@ -57,6 +57,7 @@ def get_articles_info_from_query(query, num_articles, api_key):
             f'from={query["from"]}&'
             f'sortBy={query["sort_by"]}&'
             f'page={page_num}&'
+            f'language=en&'
             f'apiKey={api_key}')
         response = requests.get(url).json()
 
@@ -112,10 +113,13 @@ with open(newsapi_path, "r") as file:
 
 newsapi_key = os.environ["API_KEY"]
 
-article_data = []
+article_data_list = []
 for q in qs["queries"]:
     data = get_articles_info_from_query(q, conf["articles_per_query"], newsapi_key)
-    article_data.append(data)
+    article_data_list.append(data)
+article_data_dict = {
+    "article_data": article_data_list
+}
 
 with open(f'article_data.json', 'w') as f:
-    json.dump(json.dumps(article_data), f)
+    json.dump(article_data_dict, f)
