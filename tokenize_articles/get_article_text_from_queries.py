@@ -51,6 +51,7 @@ def get_articles_info_from_query(query, num_articles, api_key):
     total_articles = 0
     page_num = 1
     total_results = float('inf')
+    query_articles = []
     while total_articles < num_articles and total_articles < total_results:
         url = (f'{query["get_url"]}'
             f'q={query["q"]}&'
@@ -67,13 +68,18 @@ def get_articles_info_from_query(query, num_articles, api_key):
             raise Exception(f"newsapi call returned an error\n call: {url}")
 
         total_results = response["totalResults"]
-        query_ariticles = []
         for a in response["articles"]:
             try:
                 article = Article(a["url"])
                 article.download()
                 article.parse()
-                query_ariticles.append(
+
+                # try another article if we weren't able to get the text
+                if len(article.text) < 50:
+                    # print("continuing...")
+                    continue
+
+                query_articles.append(
                     {
                         "source_name": a["source"]["name"],
                         "author": a["author"],
@@ -84,17 +90,20 @@ def get_articles_info_from_query(query, num_articles, api_key):
                     }
                 )
                 total_articles += 1
-                print(f"total_articles: {total_articles} \n page_num: {page_num}")
+                # print(f"len(query_articles): {len(query_articles)} total_articles: {total_articles} \n page_num: {page_num}")
                 if total_articles >= num_articles or total_articles >= total_results:
+                    # print(f"Done with {query['q']}:\n total_articles: {total_articles} \n num_articles: {num_articles} \n total_results: {total_results}")
+                    # print(f"len(query_articles): {len(query_articles)}")
                     break
             except ArticleException as e:
-                print(f'Got {e}. Skipping url: {a["url"]}')
+                pass
+                # print(f'Got {e}. Skipping url: {a["url"]}')
 
         page_num += 1
         
     return {
         "query": query,
-        "articles": query_ariticles
+        "articles": query_articles
         }
 
 # load config files
@@ -117,6 +126,8 @@ article_data_list = []
 for q in qs["queries"]:
     data = get_articles_info_from_query(q, conf["articles_per_query"], newsapi_key)
     article_data_list.append(data)
+    print(f"Query: {data['query']['q']}")
+    print(f"Num Articles: {len(data['articles'])}")
 article_data_dict = {
     "article_data": article_data_list
 }

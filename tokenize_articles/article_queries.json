@@ -25,7 +25,7 @@
     },
     {
         "get_url": "https://newsapi.org/v2/everything?",
-        "q": "Guilty Gear Strive",
+        "q": "Ukraine",
         "from": "2023-06-28",
         "sort_by": "popularity"
     }
