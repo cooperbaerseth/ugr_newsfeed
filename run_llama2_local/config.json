@@ -1,0 +1,6 @@
+{
+    "news_api_key_path": "/Users/sethcooper-baer/Desktop/Desktop/personal_projects/user_guided_news_recommendations/newsapi_key.txt",
+    "hugging_face_api_key_path": "/Users/sethcooper-baer/Desktop/Desktop/personal_projects/user_guided_news_recommendations/huggingface_key.txt",
+    "llama_model_path": "/Users/sethcooper-baer/Desktop/Desktop/personal_projects/llama2/llama/llama-2-7b",
+    "hugging_face_model_name": "meta-llama/Llama-2-7b-hf"
+}
